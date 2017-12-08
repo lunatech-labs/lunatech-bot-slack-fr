@@ -1,13 +1,18 @@
 package controllers
 
 import javax.inject._
+
+import play.api.libs.ws.WSClient
 import play.api.mvc._
+
+import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
   * This is a bot for Slack, for Lunatech, that monitors RER and is able to send traffic details to Slack.
   */
 @Singleton
-class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
+class HomeController @Inject()(cc: ControllerComponents, ws: WSClient) extends AbstractController(cc) {
   //
   //  @Inject
   //  val  wsClient:WSClient
@@ -33,6 +38,20 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
 
       Ok(".... message posté ... ")
 
+  }
+
+  def showHeaders = Action {
+    implicit request =>
+      val result = "IP Address origin:" + request.headers.get("X-Forwarded-For").getOrElse("Unknown")
+      Ok(result)
+  }
+
+  def callMyself(url: String) = Action.async {
+    implicit request =>
+      ws.url(url).get().map {
+        response =>
+          Ok(s"Call Myself returned [${response.body}]")
+      }
   }
 
 }
