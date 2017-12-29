@@ -1,7 +1,5 @@
 GET     /                           controllers.HomeController.index
 GET     /checkNextRER               controllers.HomeController.checkNextRER
-
-GET /debug/showHeaders  controllers.HomeController.showHeaders
-GET /debug/callMyself   controllers.HomeController.callMyself(url:String)
+GET     /testSend                   controllers.HomeController.sendMessage
 
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
