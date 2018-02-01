@@ -29,11 +29,17 @@ class HomeController @Inject()(cc: ControllerComponents,
     Ok(result)
   }
 
-  def sendMessage = Action {
-    implicit request =>
+  // This is called by Slack when a user enters "/status_rer" on Slack
+  def checkStatusRER = Action {
+    val result = rerService.getRERStatus
+    Ok(result)
+  }
 
+  // Send a message to Slack
+  def publishNextRERToSlack = Action {
+    implicit request =>
       // Post a message to Slack to the Lunatech Channel
-      slackService.postMessage("Test bot RER...")
+      slackService.postMessage("Le prochain RER qui passe à Val d'Europe vers Paris "+rerService.nextRERHours)
 
 
       Ok(".... message posté ... ")
