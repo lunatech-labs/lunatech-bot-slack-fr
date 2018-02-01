@@ -1,7 +1,6 @@
 GET     /                           controllers.HomeController.index
 GET     /checkNextRER               controllers.HomeController.checkNextRER
-
-GET /debug/showHeaders  controllers.HomeController.showHeaders
-GET /debug/callMyself   controllers.HomeController.callMyself(url:String)
+GET     /checkStatusRER             controllers.HomeController.checkStatusRER
+GET     /publishRER                 controllers.HomeController.publishNextRERToSlack
 
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
